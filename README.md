@@ -64,6 +64,10 @@ Make sure to deploy the output of `npm run build`
 │   └── server/    # Server-side code
 ```
 
+## Attributions
+
+- Favicon: [Agriculture icons created by Mihimihi - Flaticon](https://www.flaticon.com/free-icons/agriculture)
+
 ---
 
 Built with ❤️ using React Router.
