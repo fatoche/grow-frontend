@@ -1,48 +1,79 @@
-import logoDark from "./logo-dark.svg";
-import logoLight from "./logo-light.svg";
+import { Box, Typography, Container, Paper, Fade } from '@mui/material';
+import { styled } from '@mui/material/styles';
+
+const StyledPaper = styled(Paper)(({ theme }) => ({
+  padding: theme.spacing(6),
+  background: 'linear-gradient(135deg, #E8F5E8 0%, #F1F8E9 100%)',
+  borderRadius: theme.spacing(3),
+  boxShadow: '0 8px 32px rgba(46, 125, 50, 0.1)',
+  border: `1px solid ${theme.palette.primary.light}`,
+  backdropFilter: 'blur(8px)',
+  maxWidth: 600,
+  textAlign: 'center',
+}));
+
+const WelcomeBox = styled(Box)(({ theme }) => ({
+  minHeight: '100vh',
+  background: `linear-gradient(135deg, ${theme.palette.background.default} 0%, #C8E6C9 100%)`,
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  padding: theme.spacing(2),
+}));
 
 export function Welcome() {
   return (
-    <main className="flex items-center justify-center pt-16 pb-4">
-      <div className="flex-1 flex flex-col items-center gap-16 min-h-0">
-        <header className="flex flex-col items-center gap-9">
-          <div className="w-[500px] max-w-[100vw] p-4">
-            <img
-              src={logoLight}
-              alt="React Router"
-              className="block w-full dark:hidden"
-            />
-            <img
-              src={logoDark}
-              alt="React Router"
-              className="hidden w-full dark:block"
-            />
-          </div>
-        </header>
-        <div className="max-w-[300px] w-full space-y-6 px-4">
-          <nav className="rounded-3xl border border-gray-200 p-6 dark:border-gray-700 space-y-4">
-            <p className="leading-6 text-gray-700 dark:text-gray-200 text-center">
-              What&apos;s next?
-            </p>
-            <ul>
-              {resources.map(({ href, text, icon }) => (
-                <li key={href}>
-                  <a
-                    className="group flex items-center gap-3 self-stretch p-3 leading-normal text-blue-700 hover:underline dark:text-blue-500"
-                    href={href}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    {icon}
-                    {text}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </nav>
-        </div>
-      </div>
-    </main>
+    <WelcomeBox>
+      <Container maxWidth="md">
+        <Fade in={true} timeout={1000}>
+          <StyledPaper elevation={0}>
+            <Typography 
+              variant="h1" 
+              component="h1" 
+              gutterBottom
+              sx={{ 
+                background: 'linear-gradient(45deg, #2E7D32, #4CAF50)',
+                backgroundClip: 'text',
+                WebkitBackgroundClip: 'text',
+                color: 'transparent',
+                fontWeight: 700,
+                letterSpacing: '-0.02em',
+                mb: 2
+              }}
+            >
+              Welcome to GROW
+            </Typography>
+            
+            <Typography 
+              variant="h3" 
+              component="h2"
+              sx={{ 
+                color: 'text.secondary',
+                fontWeight: 400,
+                mb: 3,
+                opacity: 0.8
+              }}
+            >
+              Gartenplanung leicht gemacht
+            </Typography>
+            
+            <Typography 
+              variant="body1" 
+              sx={{ 
+                color: 'text.primary',
+                fontSize: '1.1rem',
+                lineHeight: 1.6,
+                maxWidth: 480,
+                mx: 'auto'
+              }}
+            >
+              Planen Sie Ihren Garten mit modernster Technologie. 
+              Zettelwirtschaft ade - Puzzlespaß bleibt.
+            </Typography>
+          </StyledPaper>
+        </Fade>
+      </Container>
+    </WelcomeBox>
   );
 }
 
