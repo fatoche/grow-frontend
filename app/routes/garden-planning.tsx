@@ -1,14 +1,14 @@
-import type { Route } from "./+types/beds";
+import type { Route } from "./+types/garden-planning";
 import { Garden } from "../components/Garden";
 
 export function meta({}: Route.MetaArgs) {
   return [
-    { title: "GROW - Garden Beds" },
-    { name: "description", content: "Plan your garden beds with GROW" },
+    { title: "GROW - Garden Planning" },
+    { name: "description", content: "Plan your garden with GROW" },
   ];
 }
 
-export default function Beds() {
+export default function GardenPlanning() {
   return (
     <Garden 
       numberOfBeds={6}
