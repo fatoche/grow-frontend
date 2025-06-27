@@ -10,9 +10,9 @@ interface GardenProps {
 
 const GardenContainer = styled(Box)(({ theme }) => ({
   minHeight: '100vh',
-  backgroundColor: '#D2B48C', // light brown
+  backgroundColor: theme.palette.garden.main,
   padding: theme.spacing(3),
-  background: 'linear-gradient(135deg, #D2B48C 0%, #DEB887 50%, #F5DEB3 100%)',
+  background: `linear-gradient(135deg, ${theme.palette.garden.main} 0%, ${theme.palette.garden.light} 50%, ${theme.palette.garden.dark} 100%)`,
   display: 'flex',
   alignItems: 'center',
 }));

@@ -1,5 +1,27 @@
 import { createTheme } from "@mui/material/styles";
 
+// Extend the Material-UI theme to include custom colors
+declare module "@mui/material/styles" {
+  interface Palette {
+    garden: {
+      main: string;
+      light: string;
+      dark: string;
+      bed: string;
+      bedBorder: string;
+    };
+  }
+  interface PaletteOptions {
+    garden?: {
+      main: string;
+      light: string;
+      dark: string;
+      bed: string;
+      bedBorder: string;
+    };
+  }
+}
+
 // Custom theme with beautiful colors
 export const theme = createTheme({
   palette: {
@@ -23,6 +45,13 @@ export const theme = createTheme({
     text: {
       primary: "#1B5E20", // Dark green for primary text
       secondary: "#2E7D32", // Medium green for secondary text
+    },
+    garden: {
+      main: "#D2B48C", // Light brown for garden background
+      light: "#DEB887", // Lighter brown
+      dark: "#F5DEB3", // Darker brown
+      bed: "#8D4004", // Dark brown for bed background
+      bedBorder: "#654321", // Darker brown for bed border
     },
   },
   typography: {

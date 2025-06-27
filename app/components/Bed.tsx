@@ -7,9 +7,9 @@ interface BedProps {
 }
 
 const BedBox = styled(Box)(({ theme }) => ({
-  backgroundColor: '#8D4004', // dark brown
+  backgroundColor: theme.palette.garden.bed,
   borderRadius: theme.spacing(1),
-  border: '2px solid #654321',
+  border: `2px solid ${theme.palette.garden.bedBorder}`,
   boxShadow: '0 2px 8px rgba(0, 0, 0, 0.2)',
   minHeight: '40px',
   minWidth: '40px',
