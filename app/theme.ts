@@ -22,6 +22,12 @@ declare module "@mui/material/styles" {
   }
 }
 
+declare module "@mui/material/Button" {
+  interface ButtonPropsVariantOverrides {
+    welcome: true;
+  }
+}
+
 // Custom theme with beautiful colors
 export const theme = createTheme({
   palette: {
@@ -78,6 +84,47 @@ export const theme = createTheme({
         body: {
           backgroundColor: "#F1F8E9",
           minHeight: "100vh",
+        },
+      },
+    },
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          textTransform: "none",
+        },
+      },
+      variants: [
+        {
+          props: { variant: "welcome" },
+          style: {
+            backgroundColor: "#2E7D32",
+            color: "white",
+            padding: "12px 32px",
+            fontSize: "1.1rem",
+            fontWeight: 600,
+            borderRadius: "16px",
+            boxShadow: "0 4px 12px rgba(46, 125, 50, 0.3)",
+            "&:hover": {
+              backgroundColor: "#1B5E20",
+              boxShadow: "0 6px 16px rgba(46, 125, 50, 0.4)",
+            },
+          },
+        },
+      ],
+    },
+    MuiPaper: {
+      styleOverrides: {
+        root: {
+          "&.welcome-paper": {
+            padding: "48px",
+            background: "linear-gradient(135deg, #E8F5E8 0%, #F1F8E9 100%)",
+            borderRadius: "24px",
+            boxShadow: "0 8px 32px rgba(46, 125, 50, 0.1)",
+            border: "1px solid #4CAF50",
+            backdropFilter: "blur(8px)",
+            maxWidth: 600,
+            textAlign: "center",
+          },
         },
       },
     },
