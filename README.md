@@ -1,5 +1,28 @@
 # Welcome to grow-frontend
 
+## Features/Capabilities
+
+- [x] Initialized FE with react Router
+- [x] Welcome page
+- [x] Garden page: Display beds
+- [x] Database design
+- [x] Mongo database created
+
+### Next up
+
+- [ ] Link from Welcome to Garden page
+- [ ] User can select number of beds and they are saved in Mongo
+- [ ] Encapsulated styling
+
+### Later
+
+- [ ] Set up all tables in the database design
+- [ ] Add form to add plant families to db
+- [ ] Add capability to assign plant families to beds
+- [ ] Add form to add plants to db
+- [ ] Add form to add plantings to db and display them in a table
+
+
 ## Getting Started
 
 ### Installation
