@@ -1,11 +1,10 @@
 import { Box, Container } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { Bed } from './Bed';
+import type { Bed as BedType } from '../types/bed';
 
 interface GardenProps {
-  numberOfBeds: number;
-  bedLength: number; // in centimeters
-  bedWidth: number;  // in centimeters
+  beds: BedType[];
 }
 
 const GardenContainer = styled(Box)(({ theme }) => ({
@@ -37,21 +36,18 @@ const BedsGrid = styled(Box)(({ theme }) => ({
   },
 }));
 
-export function Garden({ numberOfBeds, bedLength, bedWidth }: GardenProps) {
-  // Create array of beds
-  const beds = Array.from({ length: numberOfBeds }, (_, index) => (
-    <Bed 
-      key={index}
-      length={bedLength} 
-      width={bedWidth} 
-    />
-  ));
-
+export function Garden({ beds }: GardenProps) {
   return (
     <GardenContainer>
       <Container maxWidth="xl" sx={{ width: '100%' }}>
         <BedsGrid>
-          {beds}
+          {beds.map((bed) => (
+            <Bed 
+              key={bed.id}
+              length={bed.length} 
+              width={bed.width} 
+            />
+          ))}
         </BedsGrid>
       </Container>
     </GardenContainer>
