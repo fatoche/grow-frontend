@@ -7,16 +7,18 @@
 - [x] Garden page: Display beds
 - [x] Database design
 - [x] Mongo database created
+- [x] Link from Welcome to Garden page
+- [x] User can select number of beds and they are saved in Mongo
+- [x] Encapsulated styling
 
 ### Next up
 
-- [ ] Link from Welcome to Garden page
-- [ ] User can select number of beds and they are saved in Mongo
-- [ ] Encapsulated styling
+- [ ] If beds exist in the db, display them instead of the form
+- [ ] Layout beds to span 90% of screen width
+- [ ] Add option --reload to main.py
 
 ### Later
 
-- [ ] Set up all tables in the database design
 - [ ] Add form to add plant families to db
 - [ ] Add capability to assign plant families to beds
 - [ ] Add form to add plants to db

@@ -1,11 +1,10 @@
 import { Box, Container } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { Bed } from './Bed';
+import type { Bed as BedType } from '../types/bed';
 
 interface GardenProps {
-  numberOfBeds: number;
-  bedLength: number; // in centimeters
-  bedWidth: number;  // in centimeters
+  beds: BedType[];
 }
 
 const GardenContainer = styled(Box)(({ theme }) => ({
@@ -17,42 +16,38 @@ const GardenContainer = styled(Box)(({ theme }) => ({
   alignItems: 'center',
 }));
 
-const BedsGrid = styled(Box)(({ theme }) => ({
-  display: 'grid',
-  gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+const BedsContainer = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'column',
   gap: theme.spacing(3),
+  width: '100%',
+  maxWidth: '800px',
+  margin: '0 auto',
   padding: theme.spacing(2),
-  minHeight: '80vh',
-  alignContent: 'center',
-  justifyItems: 'center',
-  
-  [theme.breakpoints.down('sm')]: {
-    gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))',
-    gap: theme.spacing(2),
-  },
-  
-  [theme.breakpoints.up('lg')]: {
-    gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
-    gap: theme.spacing(4),
-  },
 }));
 
-export function Garden({ numberOfBeds, bedLength, bedWidth }: GardenProps) {
-  // Create array of beds
-  const beds = Array.from({ length: numberOfBeds }, (_, index) => (
-    <Bed 
-      key={index}
-      length={bedLength} 
-      width={bedWidth} 
-    />
-  ));
+const BedWrapper = styled(Box)(({ theme }) => ({
+  width: '90%',
+  margin: '0 auto',
+  display: 'flex',
+  justifyContent: 'center',
+}));
 
+export function Garden({ beds }: GardenProps) {
   return (
     <GardenContainer>
       <Container maxWidth="xl" sx={{ width: '100%' }}>
-        <BedsGrid>
-          {beds}
-        </BedsGrid>
+        <BedsContainer>
+          {beds.map((bed) => (
+            <BedWrapper key={bed.id}>
+              <Bed 
+                index={bed.index}
+                length={bed.length} 
+                width={bed.width} 
+              />
+            </BedWrapper>
+          ))}
+        </BedsContainer>
       </Container>
     </GardenContainer>
   );
