@@ -1,0 +1,6 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+Whereever possible, use MUI classes instead of Tailwind. All styling should be in done using the MUI theme from theme.ts. If a use of className would be necessary create a wrapper component in app/components/mui-helpers instead.

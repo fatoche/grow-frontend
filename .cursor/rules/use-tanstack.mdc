@@ -1,0 +1,6 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+For queries, use tanstack's react-query and create mutations and queries inside the api folder.
