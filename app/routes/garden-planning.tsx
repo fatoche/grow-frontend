@@ -4,7 +4,7 @@ import { Alert, Snackbar } from '@mui/material';
 import type { Route } from "./+types/garden-planning";
 import { Garden } from "../components/Garden";
 import { BedCreationForm } from "../components/BedCreationForm";
-import { createBeds } from "../api/beds";
+import { createBedsWithCleanup } from "../api/beds";
 import type { Bed } from "../types/bed";
 
 export function meta({}: Route.MetaArgs) {
@@ -23,7 +23,7 @@ export default function GardenPlanning() {
   const [error, setError] = useState<string | null>(null);
 
   const createBedsMutation = useMutation({
-    mutationFn: createBeds,
+    mutationFn: createBedsWithCleanup,
     onSuccess: (data) => {
       setBeds(data.beds);
       setShowForm(false);
