@@ -11,6 +11,7 @@ const BedContainer = styled(Box)(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   gap: theme.spacing(1),
+  width: '100%',
 }));
 
 const BedIndex = styled(Typography)(({ theme }) => ({
@@ -18,6 +19,7 @@ const BedIndex = styled(Typography)(({ theme }) => ({
   color: theme.palette.text.secondary,
   minWidth: '24px',
   textAlign: 'center',
+  flexShrink: 0,
 }));
 
 const BedBox = styled(Box)(({ theme }) => ({
@@ -25,10 +27,8 @@ const BedBox = styled(Box)(({ theme }) => ({
   borderRadius: theme.spacing(1),
   border: `2px solid ${theme.palette.garden.bedBorder}`,
   boxShadow: '0 2px 8px rgba(0, 0, 0, 0.2)',
-  minHeight: '40px',
-  minWidth: '40px',
-  maxWidth: '200px',
-  maxHeight: '200px',
+  flex: 1,
+  minHeight: '60px',
 }));
 
 export function Bed({ index, length, width }: BedProps) {
@@ -43,14 +43,9 @@ export function Bed({ index, length, width }: BedProps) {
       </BedIndex>
       <BedBox
         sx={{
-          width: '100%',
-          height: '100%',
-          maxWidth: `min(200px, ${200 * aspectRatio}px)`,
-          maxHeight: `min(200px, ${200 / aspectRatio}px)`,
-          aspectRatio: `${aspectRatio}`,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
+          height: `calc(100vw * 0.9 * 0.8 * ${width / length})`,
+          maxHeight: '300px',
+          minHeight: '60px',
         }}
       />
     </BedContainer>
