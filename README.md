@@ -10,9 +10,9 @@
 
 ### Next up
 
-- [ ] Link from Welcome to Garden page
+- [x] Link from Welcome to Garden page
 - [ ] User can select number of beds and they are saved in Mongo
-- [ ] Encapsulated styling
+- [x] Encapsulated styling
 
 ### Later
 
