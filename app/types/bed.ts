@@ -1,5 +1,6 @@
 export interface Bed {
   id: string;
+  index: number; // User-readable bed index (1-based)
   length: number; // in centimeters
   width: number; // in centimeters
 }

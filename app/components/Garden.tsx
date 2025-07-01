@@ -44,6 +44,7 @@ export function Garden({ beds }: GardenProps) {
           {beds.map((bed) => (
             <Bed 
               key={bed.id}
+              index={bed.index}
               length={bed.length} 
               width={bed.width} 
             />

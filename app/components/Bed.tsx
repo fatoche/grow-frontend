@@ -1,10 +1,24 @@
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
 interface BedProps {
+  index: number; // User-readable bed index
   length: number; // in centimeters
   width: number;  // in centimeters
 }
+
+const BedContainer = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  gap: theme.spacing(1),
+}));
+
+const BedIndex = styled(Typography)(({ theme }) => ({
+  fontWeight: 600,
+  color: theme.palette.text.secondary,
+  minWidth: '24px',
+  textAlign: 'center',
+}));
 
 const BedBox = styled(Box)(({ theme }) => ({
   backgroundColor: theme.palette.garden.bed,
@@ -17,23 +31,28 @@ const BedBox = styled(Box)(({ theme }) => ({
   maxHeight: '200px',
 }));
 
-export function Bed({ length, width }: BedProps) {
+export function Bed({ index, length, width }: BedProps) {
   // Calculate aspect ratio (length:width)
   // Length is horizontal, width is vertical
   const aspectRatio = length / width;
   
   return (
-    <BedBox
-      sx={{
-        width: '100%',
-        height: '100%',
-        maxWidth: `min(200px, ${200 * aspectRatio}px)`,
-        maxHeight: `min(200px, ${200 / aspectRatio}px)`,
-        aspectRatio: `${aspectRatio}`,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-      }}
-    />
+    <BedContainer>
+      <BedIndex variant="body2">
+        {index}
+      </BedIndex>
+      <BedBox
+        sx={{
+          width: '100%',
+          height: '100%',
+          maxWidth: `min(200px, ${200 * aspectRatio}px)`,
+          maxHeight: `min(200px, ${200 / aspectRatio}px)`,
+          aspectRatio: `${aspectRatio}`,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      />
+    </BedContainer>
   );
 } 
