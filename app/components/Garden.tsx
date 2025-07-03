@@ -1,10 +1,12 @@
-import { Box, Container } from '@mui/material';
+import { Box, Container, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { Bed } from './Bed';
 import type { Bed as BedType } from '../types/bed';
+import { StyledButton } from '~/components/mui-helpers';
 
 interface GardenProps {
   beds: BedType[];
+  setShowForm: (showForm: boolean) => void;
 }
 
 const GardenContainer = styled(Box)(({ theme }) => ({
@@ -33,7 +35,7 @@ const BedWrapper = styled(Box)(({ theme }) => ({
   justifyContent: 'center',
 }));
 
-export function Garden({ beds }: GardenProps) {
+export function Garden({ beds, setShowForm }: GardenProps) {
   return (
     <GardenContainer>
       <Container maxWidth="xl" sx={{ width: '100%' }}>
@@ -48,6 +50,17 @@ export function Garden({ beds }: GardenProps) {
             </BedWrapper>
           ))}
         </BedsContainer>
+        <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+          <StyledButton 
+            variant="contained" 
+            sx={{ backgroundColor: 'primary.main' }}
+            onClick={() => setShowForm(true)}
+          >
+            <Typography>
+              Neuen Garten anlegen
+            </Typography>
+          </StyledButton>
+        </Box>
       </Container>
     </GardenContainer>
   );

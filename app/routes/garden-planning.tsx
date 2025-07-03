@@ -1,11 +1,12 @@
-import { useState } from 'react';
-import { useMutation } from '@tanstack/react-query';
-import { Alert, Snackbar } from '@mui/material';
+import { useEffect, useState } from 'react';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { Alert, Snackbar, Typography } from '@mui/material';
 import type { Route } from "./+types/garden-planning";
 import { Garden } from "../components/Garden";
 import { BedCreationForm } from "../components/BedCreationForm";
-import { createBedsWithCleanup } from "../api/beds";
+import { createBedsWithCleanup, getBeds } from "../api/beds";
 import type { Bed } from "../types/bed";
+import { StyledButton } from '~/components/mui-helpers';
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -18,14 +19,23 @@ export default function GardenPlanning() {
   const [numberOfBeds, setNumberOfBeds] = useState(1);
   const [length, setLength] = useState(200); // Default length in cm
   const [width, setWidth] = useState(120);   // Default width in cm
-  const [beds, setBeds] = useState<Bed[]>([]);
   const [showForm, setShowForm] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  const queryClient = useQueryClient();
+  const { data: beds, isLoading: isLoadingBeds } = useQuery({
+    queryKey: ['beds'],
+    queryFn: getBeds,
+  });
+
+  useEffect(() => {
+    if (beds && beds.length > 0) setShowForm(false);
+  }, [beds]);
+
   const createBedsMutation = useMutation({
     mutationFn: createBedsWithCleanup,
-    onSuccess: (data) => {
-      setBeds(data.beds);
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['beds'] });
       setShowForm(false);
       setError(null);
     },
@@ -42,11 +52,6 @@ export default function GardenPlanning() {
     });
   };
 
-  const handleBackToForm = () => {
-    setShowForm(true);
-    setBeds([]);
-  };
-
   return (
     <>
       {showForm ? (
@@ -61,7 +66,7 @@ export default function GardenPlanning() {
           isLoading={createBedsMutation.isPending}
         />
       ) : (
-        <Garden beds={beds} />
+        <Garden beds={beds || []} setShowForm={setShowForm} />
       )}
 
       <Snackbar

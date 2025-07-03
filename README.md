@@ -13,7 +13,7 @@
 
 ### Next up
 
-- [ ] If beds exist in the db, display them instead of the form
+- [x] If beds exist in the db, display them instead of the form
 - [ ] Layout beds to span 90% of screen width
 - [ ] Add option --reload to main.py
 
