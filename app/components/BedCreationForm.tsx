@@ -154,7 +154,6 @@ export function BedCreationForm({
 
         <StyledButton
           type="submit"
-          variant="contained"
           color="primary"
           fullWidth
           disabled={isLoading || numberOfBeds <= 0 || length <= 0 || width <= 0}
