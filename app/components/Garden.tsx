@@ -23,13 +23,13 @@ const BedsContainer = styled(Box)(({ theme }) => ({
   flexDirection: 'column',
   gap: theme.spacing(3),
   width: '100%',
-  maxWidth: '800px',
+  maxWidth: 'xl',
   margin: '0 auto',
-  padding: theme.spacing(2),
+  padding: 0,
 }));
 
-const BedWrapper = styled(Box)(({ theme }) => ({
-  width: '90%',
+const BedWrapper = styled(Box)(() => ({
+  width: '100%',
   margin: '0 auto',
   display: 'flex',
   justifyContent: 'center',

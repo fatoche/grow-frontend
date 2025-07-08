@@ -14,11 +14,12 @@
 ### Next up
 
 - [x] If beds exist in the db, display them instead of the form
-- [ ] Layout beds to span 90% of screen width
+- [x] Layout beds to span 90% of screen width
 - [x] Add option --reload to main.py
 
 ### Later
 
+- [ ] Show loading indicator instead of form when entering /garden
 - [ ] Add form to add plant families to db
 - [ ] Add capability to assign plant families to beds
 - [ ] Add form to add plants to db
