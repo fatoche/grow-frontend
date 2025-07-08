@@ -43,9 +43,8 @@ export function Bed({ index, length, width }: BedProps) {
       </BedIndex>
       <BedBox
         sx={{
-          height: `calc(100vw * 0.9 * 0.8 * ${width / length})`,
-          maxHeight: '300px',
-          minHeight: '60px',
+          aspectRatio: `${aspectRatio}`,
+          width: '100%',
         }}
       />
     </BedContainer>

@@ -16,6 +16,7 @@
 - [x] If beds exist in the db, display them instead of the form
 - [x] Layout beds to span 90% of screen width
 - [x] Add option --reload to main.py
+- [x] Fix height/width ratio of beds
 
 ### Later
 
