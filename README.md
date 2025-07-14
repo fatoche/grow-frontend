@@ -17,10 +17,10 @@
 - [x] Layout beds to span 90% of screen width
 - [x] Add option --reload to main.py
 - [x] Fix height/width ratio of beds
+- [x] Show loading indicator instead of form when entering /garden
 
 ### Later
 
-- [ ] Show loading indicator instead of form when entering /garden
 - [ ] Add form to add plant families to db
 - [ ] Add capability to assign plant families to beds
 - [ ] Add form to add plants to db

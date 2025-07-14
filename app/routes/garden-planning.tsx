@@ -5,8 +5,6 @@ import type { Route } from "./+types/garden-planning";
 import { Garden } from "../components/Garden";
 import { BedCreationForm } from "../components/BedCreationForm";
 import { createBedsWithCleanup, getBeds } from "../api/beds";
-import type { Bed } from "../types/bed";
-import { StyledButton } from '~/components/mui-helpers';
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -19,7 +17,7 @@ export default function GardenPlanning() {
   const [numberOfBeds, setNumberOfBeds] = useState(1);
   const [length, setLength] = useState(200); // Default length in cm
   const [width, setWidth] = useState(120);   // Default width in cm
-  const [showForm, setShowForm] = useState(true);
+  const [showForm, setShowForm] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const queryClient = useQueryClient();
@@ -29,7 +27,7 @@ export default function GardenPlanning() {
   });
 
   useEffect(() => {
-    if (beds && beds.length > 0) setShowForm(false);
+    if (beds && beds.length === 0) setShowForm(true);
   }, [beds]);
 
   const createBedsMutation = useMutation({
@@ -54,7 +52,9 @@ export default function GardenPlanning() {
 
   return (
     <>
-      {showForm ? (
+      {isLoadingBeds ? (
+        <Typography>Loading...</Typography>
+      ) : showForm ? (
         <BedCreationForm
           numberOfBeds={numberOfBeds}
           setNumberOfBeds={setNumberOfBeds}
