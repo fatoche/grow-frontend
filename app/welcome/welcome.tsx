@@ -64,15 +64,25 @@ export function Welcome() {
               </Typography>
             </Paper>
             
-            <Box sx={{ textAlign: 'right', mt: 3, maxWidth: 600, mx: 'auto' }}>
-              <Button
-                component={Link}
-                to="/garden"
-                variant="welcome"
-                size="large"
-              >
-                Lege deinen Garten an
-              </Button>
+            <Box sx={{ textAlign: 'center', mt: 3, maxWidth: 600, mx: 'auto' }}>
+              <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center', flexWrap: 'wrap' }}>
+                <Button
+                  component={Link}
+                  to="/garden"
+                  variant="welcome"
+                  size="large"
+                >
+                  Lege deinen Garten an
+                </Button>
+                <Button
+                  component={Link}
+                  to="/plant-families"
+                  variant="welcome"
+                  size="large"
+                >
+                  Pflanzen verwalten
+                </Button>
+              </Box>
             </Box>
           </Box>
         </Fade>
