@@ -18,11 +18,19 @@
 - [x] Add option --reload to main.py
 - [x] Fix height/width ratio of beds
 - [x] Show loading indicator instead of form when entering /garden
+- [ ] Try out ODMs
+    - [x] mongoengine
+    - [ ] beany
+- [ ] Add form to add plant families to db
 
 ### Later
 
-- [ ] Add form to add plant families to db
+- [ ] Add tests
+    - [ ] backend
+    - [ ] frontend
+- [ ] Add sql db
 - [ ] Add capability to assign plant families to beds
+    - [ ] Needs an overview that fits all beds on a single page. Maybe just some kind of table?
 - [ ] Add form to add plants to db
 - [ ] Add form to add plantings to db and display them in a table
 
