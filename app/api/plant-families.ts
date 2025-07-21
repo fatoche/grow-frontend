@@ -43,3 +43,13 @@ export const createPlantFamily = async (
 
   return response.json();
 };
+
+
+export const deletePlantFamily = async (plantFamilyId: string) => {
+  const response = await fetch(`${API_BASE_URL}/plants/families/${plantFamilyId}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+};

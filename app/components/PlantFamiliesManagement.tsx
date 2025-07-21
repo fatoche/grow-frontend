@@ -12,11 +12,13 @@ import {
   CircularProgress,
   Alert,
   TextField,
-  Button
+  Button,
+  IconButton,
 } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
 import { getPlantFamiliesQuery } from '../api/plant-families';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { createPlantFamily, type PlantFamilyCreationRequest } from '../api/plant-families';
+import { createPlantFamily, deletePlantFamily, type PlantFamilyCreationRequest } from '../api/plant-families';
 import { useState } from 'react';
 
 export function PlantFamiliesManagement() {
@@ -31,6 +33,13 @@ export function PlantFamiliesManagement() {
 
   const createPlantFamilyMutation = useMutation({
     mutationFn: createPlantFamily,
+    onSuccess: () => {
+      queryClient.invalidateQueries(getPlantFamiliesQuery);
+    },
+  });
+
+  const deletePlantFamilyMutation = useMutation({
+    mutationFn: deletePlantFamily,
     onSuccess: () => {
       queryClient.invalidateQueries(getPlantFamiliesQuery);
     },
@@ -108,6 +117,7 @@ export function PlantFamiliesManagement() {
                 <TableCell sx={{ fontWeight: 'bold' }}>Name</TableCell>
                 <TableCell sx={{ fontWeight: 'bold' }}>Nährstoffbedarf</TableCell>
                 <TableCell sx={{ fontWeight: 'bold' }}>Fruchtfolgezeit (Jahre)</TableCell>
+                <TableCell sx={{ fontWeight: 'bold' }}>Aktionen</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -117,6 +127,11 @@ export function PlantFamiliesManagement() {
                     <TableCell>{family.name}</TableCell>
                     <TableCell>{family.nutrition_requirements}</TableCell>
                     <TableCell>{family.rotation_time}</TableCell>
+                    <TableCell>
+                      <IconButton size="small" onClick={() => deletePlantFamilyMutation.mutate(family.id)} >
+                        <DeleteIcon />
+                      </IconButton>
+                    </TableCell>
                   </TableRow>
                 ))
               ) : (
