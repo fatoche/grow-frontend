@@ -10,29 +10,32 @@
 - [x] Link from Welcome to Garden page
 - [x] User can select number of beds and they are saved in Mongo
 - [x] Encapsulated styling
-
-### Next up
-
 - [x] If beds exist in the db, display them instead of the form
 - [x] Layout beds to span 90% of screen width
 - [x] Add option --reload to main.py
 - [x] Fix height/width ratio of beds
 - [x] Show loading indicator instead of form when entering /garden
-- [ ] Try out ODMs
+- [x] Try out ODMs
     - [x] mongoengine
-    - [ ] beany
-- [ ] Add form to add plant families to db
+    - [ ] ~beany~
+
+### Next up
+
+- [x] Add form to add plant families to db
+- [ ] Create header that allows navigation back to front page
+- [ ] Add capability to assign plant families to beds
+    - [ ] Needs an overview that fits all beds on a single page. Maybe just some kind of table?
+    - [ ] Nice drag-and-drop: highlight which beds are still open for assignment
+    - [ ] each plant family can be assigned to multiple beds
 
 ### Later
 
 - [ ] Add tests
     - [ ] backend
     - [ ] frontend
-- [ ] Add sql db
-- [ ] Add capability to assign plant families to beds
-    - [ ] Needs an overview that fits all beds on a single page. Maybe just some kind of table?
 - [ ] Add form to add plants to db
 - [ ] Add form to add plantings to db and display them in a table
+- [ ] Add sql db
 
 
 ## Getting Started
