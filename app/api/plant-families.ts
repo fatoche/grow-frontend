@@ -15,17 +15,15 @@ export interface PlantFamilyCreationRequest {
 
 const API_BASE_URL = "http://localhost:8000";
 
-export const usePlantFamilies = () => {
-  return useQuery({
-    queryKey: ["plant-families"],
-    queryFn: async (): Promise<PlantFamily[]> => {
-      const response = await fetch(`${API_BASE_URL}/plants/families`);
-      if (!response.ok) {
-        throw new Error("Failed to fetch plant families");
-      }
-      return response.json();
-    },
-  });
+export const getPlantFamiliesQuery = {
+  queryKey: ["plant-families"],
+  queryFn: async (): Promise<PlantFamily[]> => {
+    const response = await fetch(`${API_BASE_URL}/plants/families`);
+    if (!response.ok) {
+      throw new Error("Failed to fetch plant families");
+    }
+    return response.json();
+  },
 };
 
 export const createPlantFamily = async (

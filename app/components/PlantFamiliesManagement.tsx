@@ -14,8 +14,8 @@ import {
   TextField,
   Button
 } from '@mui/material';
-import { usePlantFamilies } from '../api/plant-families';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { getPlantFamiliesQuery } from '../api/plant-families';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { createPlantFamily, type PlantFamilyCreationRequest } from '../api/plant-families';
 import { useState } from 'react';
 
@@ -27,12 +27,12 @@ export function PlantFamiliesManagement() {
   });
   
   const queryClient = useQueryClient();
-  const { data: plantFamilies, isLoading, error } = usePlantFamilies();
+  const { data: plantFamilies, isLoading, error } = useQuery(getPlantFamiliesQuery);
 
   const createPlantFamilyMutation = useMutation({
     mutationFn: createPlantFamily,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['plantFamilies'] });
+      queryClient.invalidateQueries(getPlantFamiliesQuery);
     },
   });
 
