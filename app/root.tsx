@@ -7,8 +7,10 @@ import {
 } from "react-router";
 import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
+import { Box } from '@mui/material';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { theme } from './theme';
+import Header from './components/Header';
 
 import type { Route } from "./+types/root";
 import "./app.css";
@@ -60,7 +62,14 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
-  return <Outlet />;
+  return (
+    <>
+      <Header />
+      <Box sx={{ pt: '64px' }}>
+        <Outlet />
+      </Box>
+    </>
+  );
 }
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {

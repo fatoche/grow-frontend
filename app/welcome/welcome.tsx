@@ -3,7 +3,7 @@ import { styled } from '@mui/material/styles';
 import { Link } from 'react-router';
 
 const WelcomeBox = styled(Box)(({ theme }) => ({
-  minHeight: '100vh',
+  minHeight: 'calc(100vh - 64px)',
   background: `linear-gradient(135deg, ${theme.palette.background.default} 0%, #C8E6C9 100%)`,
   display: 'flex',
   alignItems: 'center',

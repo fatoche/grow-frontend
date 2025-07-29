@@ -10,7 +10,7 @@ interface GardenProps {
 }
 
 const GardenContainer = styled(Box)(({ theme }) => ({
-  minHeight: '100vh',
+  minHeight: 'calc(100vh - 64px)',
   backgroundColor: theme.palette.garden.main,
   padding: theme.spacing(3),
   background: `linear-gradient(135deg, ${theme.palette.garden.main} 0%, ${theme.palette.garden.light} 50%, ${theme.palette.garden.dark} 100%)`,
