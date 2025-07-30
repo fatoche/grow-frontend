@@ -18,12 +18,12 @@ interface PlantFamilyCardProps {
 
 const getNutritionColor = (nutritionRequirements: string): string => {
   const requirements = nutritionRequirements.toLowerCase();
-  if (requirements.includes('stark') || requirements.includes('starkzehrer')) {
+  if (requirements.includes('stark')) {
     return '#FF5722'; // Dark orange
-  } else if (requirements.includes('mittel') || requirements.includes('mittelzehrer')) {
+  } else if (requirements.includes('mittel')) {
     return '#FF9800'; // Orange
-  } else if (requirements.includes('schwach') || requirements.includes('schwachzehrer')) {
-    return '#FFEB3B'; // Yellow
+  } else if (requirements.includes('schwach')) {
+    return '#FFCC00'; // Yellow
   }
   return '#9E9E9E'; // Default gray
 };
