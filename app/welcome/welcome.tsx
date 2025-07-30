@@ -68,6 +68,14 @@ export function Welcome() {
               <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center', flexWrap: 'wrap' }}>
                 <Button
                   component={Link}
+                  to="/bed-assignment"
+                  variant="welcome"
+                  size="large"
+                >
+                  Beete zuweisen
+                </Button>
+                <Button
+                  component={Link}
                   to="/garden"
                   variant="welcome"
                   size="large"

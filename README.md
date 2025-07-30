@@ -24,9 +24,11 @@
 - [x] Add form to add plant families to db
 - [x] Create header that allows navigation back to front page
 - [ ] Add capability to assign plant families to beds
-    - [ ] Needs an overview that fits all beds on a single page. Maybe just some kind of table?
-    - [ ] Nice drag-and-drop: highlight which beds are still open for assignment
-    - [ ] each plant family can be assigned to multiple beds
+    - [x] Needs an overview that fits all beds on a single page. Flex box?
+    - [x] Nice drag-and-drop
+    - [ ] highlight which beds are still open for assignment
+    - [x] each plant family can be assigned to multiple beds
+    - [ ] each family can only be assigned once per bed
 
 ### Later
 
