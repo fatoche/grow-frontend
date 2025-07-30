@@ -8,7 +8,8 @@ import {
 import type { PlantFamily } from '../api/plant-families';
 
 interface PlantFamilyCardProps {
-  family: PlantFamily;
+  plantFamilies: PlantFamily[];
+  familyId: string;
   onDragStart?: (e: React.DragEvent) => void;
   isDraggable?: boolean;
   showRotationTime?: boolean;
@@ -28,14 +29,19 @@ const getNutritionColor = (nutritionRequirements: string): string => {
   return '#9E9E9E'; // Default gray
 };
 
-export function PlantFamilyCard({ 
-  family, 
+export function PlantFamilyCard({
+  plantFamilies,
+  familyId, 
   onDragStart, 
   isDraggable = false, 
   showRotationTime = false,
   isCompact = false,
   onRemove 
 }: PlantFamilyCardProps) {
+  const family = plantFamilies.find(f => f.id === familyId);
+  if (!family) {
+    return null;
+  }
   const nutritionColor = getNutritionColor(family.nutrition_requirements);
 
   const handleDragStart = (e: React.DragEvent) => {

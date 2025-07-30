@@ -16,12 +16,8 @@ import { BedCard } from './BedCard';
 import type { PlantFamily } from '../api/plant-families';
 import type { Bed } from '../types/bed';
 
-interface BedWithFamilies extends Bed {
-  plantFamilies: PlantFamily[];
-}
-
 export function BedAssignment() {
-  const [bedsWithFamilies, setBedsWithFamilies] = useState<BedWithFamilies[]>([]);
+  const [bedsWithFamilies, setBedsWithFamilies] = useState<Bed[]>([]);
 
   const { data: plantFamilies, isLoading: familiesLoading, error: familiesError } = useQuery(getPlantFamiliesQuery);
   const { data: beds, isLoading: bedsLoading, error: bedsError } = useQuery({
@@ -32,7 +28,7 @@ export function BedAssignment() {
   // Initialize beds with families when beds data is loaded
   React.useEffect(() => {
     if (beds && bedsWithFamilies.length === 0) {
-      setBedsWithFamilies(beds.map(bed => ({ ...bed, plantFamilies: [] })));
+      setBedsWithFamilies(beds.map(bed => ({ ...bed, plant_families: [] })));
     }
   }, [beds, bedsWithFamilies.length]);
 
@@ -48,7 +44,7 @@ export function BedAssignment() {
       setBedsWithFamilies(prev => 
         prev.map(bed => 
           bed.id === bedId 
-            ? { ...bed, plantFamilies: [...bed.plantFamilies, plantFamily] }
+            ? { ...bed, plant_families: [...bed.plant_families, plantFamily.id] }
             : bed
         )
       );
@@ -63,7 +59,7 @@ export function BedAssignment() {
     setBedsWithFamilies(prev => 
       prev.map(bed => 
         bed.id === bedId 
-          ? { ...bed, plantFamilies: bed.plantFamilies.filter(f => f.id !== familyId) }
+          ? { ...bed, plant_families: bed.plant_families.filter(f => f !== familyId) }
           : bed
       )
     );
@@ -107,7 +103,8 @@ export function BedAssignment() {
               {plantFamilies?.map((family) => (
                 <PlantFamilyCard
                   key={family.id}
-                  family={family}
+                  plantFamilies={plantFamilies}
+                  familyId={family.id}
                   onDragStart={(e) => handleDragStart(e, family)}
                   isDraggable={true}
                   showRotationTime={true}
@@ -131,6 +128,7 @@ export function BedAssignment() {
                 <Grid item xs={12} sm={6} md={4} key={bed.id}>
                   <BedCard
                     bed={bed}
+                    plantFamilies={plantFamilies || []}
                     onDrop={(e) => handleDrop(e, bed.id)}
                     onDragOver={handleDragOver}
                     onRemoveFamily={removeFamilyFromBed}

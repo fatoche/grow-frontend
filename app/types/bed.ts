@@ -3,6 +3,7 @@ export interface Bed {
   index: number; // User-readable bed index (1-based)
   length: number; // in centimeters
   width: number; // in centimeters
+  plant_families: string[]; // plant family ids
 }
 
 export interface BedCreationRequest {

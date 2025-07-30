@@ -9,18 +9,15 @@ import { PlantFamilyCard } from './PlantFamilyCard';
 import type { Bed } from '../types/bed';
 import type { PlantFamily } from '../api/plant-families';
 
-interface BedWithFamilies extends Bed {
-  plantFamilies: PlantFamily[];
-}
-
 interface BedCardProps {
-  bed: BedWithFamilies;
+  bed: Bed;
+  plantFamilies: PlantFamily[];
   onDrop: (e: React.DragEvent) => void;
   onDragOver: (e: React.DragEvent) => void;
   onRemoveFamily: (bedId: string, familyId: string) => void;
 }
 
-export function BedCard({ bed, onDrop, onDragOver, onRemoveFamily }: BedCardProps) {
+export function BedCard({ bed, plantFamilies, onDrop, onDragOver, onRemoveFamily }: BedCardProps) {
   const handleRemoveFamily = (familyId: string) => {
     onRemoveFamily(bed.id, familyId);
   };
@@ -49,18 +46,19 @@ export function BedCard({ bed, onDrop, onDragOver, onRemoveFamily }: BedCardProp
         </Typography>
       </Box>
 
-      {bed.plantFamilies.length > 0 ? (
+      {bed.plant_families.length > 0 ? (
         <Box>
           <Typography variant="body2" sx={{ mb: 1, opacity: 0.9 }}>
             Zugewiesene Pflanzenfamilien:
           </Typography>
           <Grid container spacing={1}>
-            {bed.plantFamilies.map((family) => (
-              <Grid item xs={6} key={family.id}>
+            {bed.plant_families.map((familyId) => (
+              <Grid item xs={6} key={familyId}>
                 <PlantFamilyCard
-                  family={family}
+                  plantFamilies={plantFamilies}
+                  familyId={familyId}
                   isCompact={true}
-                  onRemove={() => handleRemoveFamily(family.id)}
+                  onRemove={() => handleRemoveFamily(familyId)}
                 />
               </Grid>
             ))}
