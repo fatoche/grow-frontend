@@ -42,11 +42,16 @@ export function BedAssignment() {
     if (plantFamilyData) {
       const plantFamily: PlantFamily = JSON.parse(plantFamilyData);
       setBedsWithFamilies(prev => 
-        prev.map(bed => 
-          bed.id === bedId 
-            ? { ...bed, plant_families: [...bed.plant_families, plantFamily.id] }
-            : bed
-        )
+        prev.map(bed => {
+          if (bed.id === bedId) {
+            // Ensure one plant family is never assigned multiple times to the same bed
+            if (bed.plant_families.includes(plantFamily.id)) {
+              return bed;
+            }
+            return { ...bed, plant_families: [...bed.plant_families, plantFamily.id] };
+          }
+          return bed;
+        })
       );
     }
   };

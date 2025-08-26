@@ -27,7 +27,7 @@
     - [x] Nice drag-and-drop
     - [ ] highlight which beds are still open for assignment
     - [x] each plant family can be assigned to multiple beds
-    - [ ] each family can only be assigned once per bed
+    - [x] each family can only be assigned once per bed
     - [ ] don't move beds no matter how many families are added
 - [ ] Add sql db
 
