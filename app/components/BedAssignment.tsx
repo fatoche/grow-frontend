@@ -8,6 +8,11 @@ import {
   CircularProgress,
   Alert,
   Snackbar,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Button,
 } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { getPlantFamiliesQuery } from '../api/plant-families';
@@ -21,6 +26,17 @@ export function BedAssignment() {
   const [bedsWithFamilies, setBedsWithFamilies] = useState<Bed[]>([]);
   const [draggedPlantFamily, setDraggedPlantFamily] = useState<PlantFamily | null>(null);
   const [errorMessage, setErrorMessage] = useState<string>('');
+  const [confirmationDialog, setConfirmationDialog] = useState<{
+    open: boolean;
+    plantFamily: PlantFamily | null;
+    targetBed: Bed | null;
+    conflictingBeds: number[];
+  }>({
+    open: false,
+    plantFamily: null,
+    targetBed: null,
+    conflictingBeds: [],
+  });
 
   const { data: plantFamilies, isLoading: familiesLoading, error: familiesError } = useQuery(getPlantFamiliesQuery);
   const { data: beds, isLoading: bedsLoading, error: bedsError } = useQuery({
@@ -136,9 +152,13 @@ export function BedAssignment() {
       );
 
       if (!constraintCheck.isValid) {
-        // Show error message for constraint violation
-        const conflictingBedsText = constraintCheck.conflictingBeds.join(', ');
-        setErrorMessage(`${plantFamily.name} kann nicht zu Beet ${targetBed.index} hinzugefügt werden. Konflikt mit Beet(en): ${conflictingBedsText}`);
+        // Show confirmation dialog for constraint violation
+        setConfirmationDialog({
+          open: true,
+          plantFamily,
+          targetBed,
+          conflictingBeds: constraintCheck.conflictingBeds,
+        });
         return;
       }
 
@@ -166,6 +186,25 @@ export function BedAssignment() {
           : bed
       )
     );
+  };
+
+  const handleConfirmConstraintViolation = () => {
+    if (confirmationDialog.plantFamily && confirmationDialog.targetBed) {
+      // Add the plant family despite the constraint violation
+      setBedsWithFamilies(prev => 
+        prev.map(bed => {
+          if (bed.id === confirmationDialog.targetBed!.id) {
+            return { ...bed, plant_families: [...bed.plant_families, confirmationDialog.plantFamily!.id] };
+          }
+          return bed;
+        })
+      );
+    }
+    setConfirmationDialog({ open: false, plantFamily: null, targetBed: null, conflictingBeds: [] });
+  };
+
+  const handleCancelConstraintViolation = () => {
+    setConfirmationDialog({ open: false, plantFamily: null, targetBed: null, conflictingBeds: [] });
   };
 
   if (familiesLoading || bedsLoading) {
@@ -251,6 +290,34 @@ export function BedAssignment() {
         message={errorMessage}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
       />
+      
+      {/* Confirmation Dialog for Constraint Violations */}
+      <Dialog
+        open={confirmationDialog.open}
+        onClose={handleCancelConstraintViolation}
+        aria-labelledby="constraint-violation-dialog-title"
+      >
+        <DialogTitle id="constraint-violation-dialog-title">
+          Missachtung der Fruchtfolgezeit
+        </DialogTitle>
+        <DialogContent>
+          <Typography>
+            {confirmationDialog.plantFamily?.name} kann nicht zu Beet {confirmationDialog.targetBed?.index} hinzugefügt werden, 
+            da es einen Konflikt mit Beet(en): {confirmationDialog.conflictingBeds.join(', ')} gibt.
+          </Typography>
+          <Typography sx={{ mt: 2, fontWeight: 'bold' }}>
+            Möchten Sie die Pflanzenfamilie trotzdem hinzufügen?
+          </Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCancelConstraintViolation} color="primary">
+            Abbrechen
+          </Button>
+          <Button onClick={handleConfirmConstraintViolation} color="error" variant="contained">
+            Trotzdem hinzufügen
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Container>
   );
 } 
