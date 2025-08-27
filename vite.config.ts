@@ -5,4 +5,15 @@ import tsconfigPaths from "vite-tsconfig-paths";
 
 export default defineConfig({
   plugins: [tailwindcss(), reactRouter(), tsconfigPaths()],
+  optimizeDeps: {
+    include: ["@mui/x-data-grid"],
+  },
+  css: {
+    modules: {
+      localsConvention: "camelCase",
+    },
+  },
+  ssr: {
+    noExternal: ["@mui/x-data-grid"],
+  },
 });
