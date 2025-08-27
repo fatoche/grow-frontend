@@ -7,6 +7,7 @@ import {
   Grid,
   CircularProgress,
   Alert,
+  Snackbar,
 } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { getPlantFamiliesQuery } from '../api/plant-families';
@@ -18,6 +19,8 @@ import type { Bed } from '../types/bed';
 
 export function BedAssignment() {
   const [bedsWithFamilies, setBedsWithFamilies] = useState<Bed[]>([]);
+  const [draggedPlantFamily, setDraggedPlantFamily] = useState<PlantFamily | null>(null);
+  const [errorMessage, setErrorMessage] = useState<string>('');
 
   const { data: plantFamilies, isLoading: familiesLoading, error: familiesError } = useQuery(getPlantFamiliesQuery);
   const { data: beds, isLoading: bedsLoading, error: bedsError } = useQuery({
@@ -32,8 +35,81 @@ export function BedAssignment() {
     }
   }, [beds, bedsWithFamilies.length]);
 
+  // Add global drag end handler
+  React.useEffect(() => {
+    const handleGlobalDragEnd = () => {
+      setDraggedPlantFamily(null);
+    };
+
+    document.addEventListener('dragend', handleGlobalDragEnd);
+    return () => {
+      document.removeEventListener('dragend', handleGlobalDragEnd);
+    };
+  }, []);
+
+  // Helper function to check if adding a plant family to a bed violates rotation constraints
+  const checkRotationConstraints = (
+    targetBedIndex: number,
+    plantFamilyId: string,
+    currentBeds: Bed[],
+    allPlantFamilies: PlantFamily[]
+  ): { isValid: boolean; conflictingBeds: number[] } => {
+    const plantFamily = allPlantFamilies.find(pf => pf.id === plantFamilyId);
+    if (!plantFamily) {
+      return { isValid: false, conflictingBeds: [] };
+    }
+
+    const rotationTime = plantFamily.rotation_time;
+    const totalBeds = currentBeds.length;
+    const conflictingBeds: number[] = [];
+
+    // Check all beds for conflicts with this plant family
+    currentBeds.forEach(bed => {
+      if (bed.plant_families.includes(plantFamilyId)) {
+        // Calculate the distance between the target bed and this bed
+        let distance = Math.abs(targetBedIndex - bed.index);
+        
+        // Handle wrapping around (beds are circular)
+        distance = Math.min(distance, totalBeds - distance);
+        
+        // If distance is less than rotation time, it's a conflict
+        if (distance < rotationTime) {
+          conflictingBeds.push(bed.index);
+        }
+      }
+    });
+
+    return {
+      isValid: conflictingBeds.length === 0,
+      conflictingBeds
+    };
+  };
+
   const handleDragStart = (e: React.DragEvent, plantFamily: PlantFamily) => {
     e.dataTransfer.setData('application/json', JSON.stringify(plantFamily));
+    setDraggedPlantFamily(plantFamily);
+  };
+
+
+
+  // Helper function to check if a plant family can be dropped on a specific bed
+  const canDropOnBed = (bed: Bed, plantFamily: PlantFamily): boolean => {
+    if (!plantFamilies) return false;
+    
+    // Check if already in this bed
+    if (bed.plant_families.includes(plantFamily.id)) {
+      return false;
+    }
+    
+    // Check rotation constraints
+    const constraintCheck = checkRotationConstraints(
+      bed.index,
+      plantFamily.id,
+      bedsWithFamilies,
+      plantFamilies
+    );
+    
+    return constraintCheck.isValid;
   };
 
   const handleDrop = (e: React.DragEvent, bedId: string) => {
@@ -41,13 +117,35 @@ export function BedAssignment() {
     const plantFamilyData = e.dataTransfer.getData('application/json');
     if (plantFamilyData) {
       const plantFamily: PlantFamily = JSON.parse(plantFamilyData);
+      
+      // Find the target bed
+      const targetBed = bedsWithFamilies.find(bed => bed.id === bedId);
+      if (!targetBed || !plantFamilies) return;
+
+      // Check if plant family is already in this bed
+      if (targetBed.plant_families.includes(plantFamily.id)) {
+        return; // Already assigned to this bed
+      }
+
+      // Check rotation constraints
+      const constraintCheck = checkRotationConstraints(
+        targetBed.index,
+        plantFamily.id,
+        bedsWithFamilies,
+        plantFamilies
+      );
+
+      if (!constraintCheck.isValid) {
+        // Show error message for constraint violation
+        const conflictingBedsText = constraintCheck.conflictingBeds.join(', ');
+        setErrorMessage(`${plantFamily.name} kann nicht zu Beet ${targetBed.index} hinzugefügt werden. Konflikt mit Beet(en): ${conflictingBedsText}`);
+        return;
+      }
+
+      // If constraints are satisfied, add the plant family to the bed
       setBedsWithFamilies(prev => 
         prev.map(bed => {
           if (bed.id === bedId) {
-            // Ensure one plant family is never assigned multiple times to the same bed
-            if (bed.plant_families.includes(plantFamily.id)) {
-              return bed;
-            }
             return { ...bed, plant_families: [...bed.plant_families, plantFamily.id] };
           }
           return bed;
@@ -137,6 +235,7 @@ export function BedAssignment() {
                     onDrop={(e) => handleDrop(e, bed.id)}
                     onDragOver={handleDragOver}
                     onRemoveFamily={removeFamilyFromBed}
+                    canDrop={draggedPlantFamily ? canDropOnBed(bed, draggedPlantFamily) : true}
                   />
                 </Grid>
               ))}
@@ -144,6 +243,14 @@ export function BedAssignment() {
           </Paper>
         </Grid>
       </Grid>
+      
+      <Snackbar
+        open={!!errorMessage}
+        autoHideDuration={6000}
+        onClose={() => setErrorMessage('')}
+        message={errorMessage}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+      />
     </Container>
   );
 } 

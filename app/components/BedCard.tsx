@@ -15,9 +15,10 @@ interface BedCardProps {
   onDrop: (e: React.DragEvent) => void;
   onDragOver: (e: React.DragEvent) => void;
   onRemoveFamily: (bedId: string, familyId: string) => void;
+  canDrop?: boolean;
 }
 
-export function BedCard({ bed, plantFamilies, onDrop, onDragOver, onRemoveFamily }: BedCardProps) {
+export function BedCard({ bed, plantFamilies, onDrop, onDragOver, onRemoveFamily, canDrop = true }: BedCardProps) {
   const handleRemoveFamily = (familyId: string) => {
     onRemoveFamily(bed.id, familyId);
   };
@@ -28,7 +29,7 @@ export function BedCard({ bed, plantFamilies, onDrop, onDragOver, onRemoveFamily
       sx={{
         p: 2,
         minHeight: 200,
-        backgroundColor: '#8D4004',
+        backgroundColor: canDrop ? '#8D4004' : 'rgba(128, 128, 128, 0.5)', // Brown for valid, greyed out for invalid
         color: 'white',
         border: '2px dashed transparent',
         transition: 'all 0.2s ease-in-out',
