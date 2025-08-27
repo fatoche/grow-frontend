@@ -1,20 +1,15 @@
-import { 
-  Box, 
-  Typography, 
-  Container, 
-  Paper, 
-  Table, 
-  TableBody, 
-  TableCell, 
-  TableContainer, 
-  TableHead, 
-  TableRow,
+import {
+  Box,
+  Typography,
+  Container,
+  Paper,
   CircularProgress,
   Alert,
   TextField,
   Button,
   IconButton,
 } from '@mui/material';
+import { DataGrid, GridActionsCellItem, type GridColDef } from '@mui/x-data-grid';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { getPlantFamiliesQuery } from '../api/plant-families';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
@@ -27,7 +22,7 @@ export function PlantFamiliesManagement() {
     nutrition_requirements: '',
     rotation_time: 1,
   });
-  
+
   const queryClient = useQueryClient();
   const { data: plantFamilies, isLoading, error } = useQuery(getPlantFamiliesQuery);
 
@@ -44,6 +39,25 @@ export function PlantFamiliesManagement() {
       queryClient.invalidateQueries(getPlantFamiliesQuery);
     },
   });
+
+  const columns: GridColDef[] = [
+    { field: 'name', headerName: 'Name', width: 200 },
+    { field: 'nutrition_requirements', headerName: 'Nährstoffbedarf', width: 300 },
+    { field: 'rotation_time', headerName: 'Fruchtfolgezeit (Jahre)', width: 200 },
+    {
+      field: 'actions',
+      headerName: 'Aktionen',
+      width: 100,
+      type: 'actions',
+      getActions: (params) => [
+        <GridActionsCellItem
+          icon={<DeleteIcon />}
+          label="Löschen"
+          onClick={() => deletePlantFamilyMutation.mutate(params.id as string)}
+        />,
+      ],
+    },
+  ];
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -109,43 +123,23 @@ export function PlantFamiliesManagement() {
         </Button>
       </Box>
       
-      <Paper elevation={2} sx={{ mt: 3 }}>
-        <TableContainer>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell sx={{ fontWeight: 'bold' }}>Name</TableCell>
-                <TableCell sx={{ fontWeight: 'bold' }}>Nährstoffbedarf</TableCell>
-                <TableCell sx={{ fontWeight: 'bold' }}>Fruchtfolgezeit (Jahre)</TableCell>
-                <TableCell sx={{ fontWeight: 'bold' }}>Aktionen</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {plantFamilies && plantFamilies.length > 0 ? (
-                plantFamilies.map((family) => (
-                  <TableRow key={family.id} hover>
-                    <TableCell>{family.name}</TableCell>
-                    <TableCell>{family.nutrition_requirements}</TableCell>
-                    <TableCell>{family.rotation_time}</TableCell>
-                    <TableCell>
-                      <IconButton size="small" onClick={() => deletePlantFamilyMutation.mutate(family.id)} >
-                        <DeleteIcon />
-                      </IconButton>
-                    </TableCell>
-                  </TableRow>
-                ))
-              ) : (
-                <TableRow>
-                  <TableCell colSpan={3} align="center">
-                    <Typography variant="body1" color="text.secondary">
-                      Keine Pflanzenfamilien gefunden
-                    </Typography>
-                  </TableCell>
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
-        </TableContainer>
+      <Paper elevation={2} sx={{ mt: 3, height: 600 }}>
+        <DataGrid
+          rows={plantFamilies || []}
+          columns={columns}
+          loading={isLoading}
+          getRowId={(row) => row.id}
+          disableRowSelectionOnClick
+          localeText={{
+            noRowsLabel: 'Keine Pflanzenfamilien gefunden',
+          }}
+          sx={{
+            border: 0,
+            '& .MuiDataGrid-cell:focus': {
+              outline: 'none',
+            },
+          }}
+        />
       </Paper>
     </Container>
   );

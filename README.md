@@ -22,21 +22,21 @@
 - [x] Create header that allows navigation back to front page
 
 ### Next up
-- [ ] Add capability to assign plant families to beds
+- [x] Add capability to assign plant families to beds
     - [x] Needs an overview that fits all beds on a single page. Flex box?
     - [x] Nice drag-and-drop
     - [x] highlight which beds are still open for assignment taking rotation time into consideration
     - [x] each plant family can be assigned to multiple beds
     - [x] each family can only be assigned once per bed
-    - [ ] don't move beds no matter how many families are added
 - [ ] Add sql db
+- [x] Make plant family table a datagrid
+- [ ] Add form to add plants to db: use datagrid, put on the same page as plant family datagrid. Maybe side-by side
 
 ### Later
 
 - [ ] Add tests
     - [ ] backend
     - [ ] frontend
-- [ ] Add form to add plants to db
 - [ ] Add form to add plantings to db and display them in a table
 
 
