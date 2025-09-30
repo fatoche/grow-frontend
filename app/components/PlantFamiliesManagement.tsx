@@ -53,7 +53,7 @@ export function PlantFamiliesManagement() {
         <GridActionsCellItem
           icon={<DeleteIcon />}
           label="Löschen"
-          onClick={() => deletePlantFamilyMutation.mutate(params.id as string)}
+          onClick={() => deletePlantFamilyMutation.mutate(params.id as number)}
         />,
       ],
     },

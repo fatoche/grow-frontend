@@ -66,7 +66,7 @@ export function BedAssignment() {
   // Helper function to check if adding a plant family to a bed violates rotation constraints
   const checkRotationConstraints = (
     targetBedIndex: number,
-    plantFamilyId: string,
+    plantFamilyId: number,
     currentBeds: Bed[],
     allPlantFamilies: PlantFamily[]
   ): { isValid: boolean; conflictingBeds: number[] } => {
@@ -128,7 +128,7 @@ export function BedAssignment() {
     return constraintCheck.isValid;
   };
 
-  const handleDrop = (e: React.DragEvent, bedId: string) => {
+  const handleDrop = (e: React.DragEvent, bedId: number) => {
     e.preventDefault();
     const plantFamilyData = e.dataTransfer.getData('application/json');
     if (plantFamilyData) {
@@ -178,7 +178,7 @@ export function BedAssignment() {
     e.preventDefault();
   };
 
-  const removeFamilyFromBed = (bedId: string, familyId: string) => {
+  const removeFamilyFromBed = (bedId: number, familyId: number) => {
     setBedsWithFamilies(prev => 
       prev.map(bed => 
         bed.id === bedId 

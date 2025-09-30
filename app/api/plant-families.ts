@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 
 export interface PlantFamily {
-  id: string;
+  id: number;
   name: string;
   nutrition_requirements: string;
   rotation_time: number;
@@ -44,12 +44,14 @@ export const createPlantFamily = async (
   return response.json();
 };
 
-
-export const deletePlantFamily = async (plantFamilyId: string) => {
-  const response = await fetch(`${API_BASE_URL}/plants/families/${plantFamilyId}`, {
-    method: "DELETE",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
+export const deletePlantFamily = async (plantFamilyId: number) => {
+  const response = await fetch(
+    `${API_BASE_URL}/plants/families/${plantFamilyId}`,
+    {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
 };

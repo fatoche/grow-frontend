@@ -9,7 +9,7 @@ import type { PlantFamily } from '../api/plant-families';
 
 interface PlantFamilyCardProps {
   plantFamilies: PlantFamily[];
-  familyId: string;
+  familyId: number;
   onDragStart?: (e: React.DragEvent) => void;
   isDraggable?: boolean;
   showRotationTime?: boolean;

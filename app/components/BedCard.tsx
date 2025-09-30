@@ -14,12 +14,12 @@ interface BedCardProps {
   plantFamilies: PlantFamily[];
   onDrop: (e: React.DragEvent) => void;
   onDragOver: (e: React.DragEvent) => void;
-  onRemoveFamily: (bedId: string, familyId: string) => void;
+  onRemoveFamily: (bedId: number, familyId: number) => void;
   canDrop?: boolean;
 }
 
 export function BedCard({ bed, plantFamilies, onDrop, onDragOver, onRemoveFamily, canDrop = true }: BedCardProps) {
-  const handleRemoveFamily = (familyId: string) => {
+  const handleRemoveFamily = (familyId: number) => {
     onRemoveFamily(bed.id, familyId);
   };
 
